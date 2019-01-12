@@ -23,7 +23,7 @@
 using namespace OpcUaStackCore;
 using namespace OpcUaStackServer;
 
-namespace OpcUaDiscovery
+namespace OpcUaDiscoveryServer
 {
 
 	Discovery::Discovery(void)

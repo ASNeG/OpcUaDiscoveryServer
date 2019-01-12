@@ -22,7 +22,7 @@
 
 using namespace OpcUaStackCore;
 
-namespace OpcUaDiscovery
+namespace OpcUaDiscoveryServer
 {
 
 	// ------------------------------------------------------------------------

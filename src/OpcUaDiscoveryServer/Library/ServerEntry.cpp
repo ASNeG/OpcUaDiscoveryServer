@@ -22,7 +22,7 @@
 using namespace OpcUaStackCore;
 using namespace OpcUaStackServer;
 
-namespace OpcUaDiscovery
+namespace OpcUaDiscoveryServer
 {
 
 	ServerEntry::ServerEntry(void)
