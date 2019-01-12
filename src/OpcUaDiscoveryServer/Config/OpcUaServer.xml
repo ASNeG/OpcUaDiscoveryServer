@@ -133,7 +133,7 @@
     <Application>
       <Name>OpcUaDiscoveryServer</Name>  
       <Library>OpcUaDiscoveryServer</Library>
-      <Config></Config>
+      <Config>@CONF_DIR@/DiscoveryModel.xml</Config>
     </Application>
   </Applications>
  

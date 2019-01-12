@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<DiscoveryModel xmlns="http://ASNeG.de/DiscoveryModel.xsd">
+
+
+    <DiscoveryServer>
+        <OfflineTimeout>600000</OfflineTimeout> 
+        <DeleteTimeout>900000</DeleteTimeout>
+    </DiscoveryServer>
+
+
+	<DiscoveryEndpoints>	
+	
+	<!--
+		<DiscoveryEndpoint>
+		    <ServerUri>urn:localhost:ASNeG.de:OpcUaHistory</ServerUri>
+		    <ProductUri>urn:ASNeG.de:OpcUaHistory</ProductUri>
+		    <ApplicationType>Server</ApplicationType>
+		    <ServerName>OpcUaHistory</ServerName>
+		    <GatewayServerUri></GatewayServerUri>
+		    <DiscoveryUrl>opc.tcp://127.0.0.1:8895</DiscoveryUrl>
+		    <SemaphoreFilePath></SemaphoreFilePath>
+		</DiscoveryEndpoint>
+	-->
+		
+	</DiscoveryEndpoints>
+	
+</DiscoveryModel>
