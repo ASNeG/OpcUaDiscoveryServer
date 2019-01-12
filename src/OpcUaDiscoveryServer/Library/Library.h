@@ -19,6 +19,8 @@
 #define __OpcUaDiscoveryServer_Library_h__
 
 #include "OpcUaStackServer/Application/ApplicationIf.h"
+#include "OpcUaDiscoveryServer/Library/Discovery.h"
+#include "OpcUaDiscoveryServer/Library/DiscoveryModelConfig.h"
 
 using namespace OpcUaStackCore;
 using namespace OpcUaStackServer;
@@ -40,6 +42,10 @@ namespace OpcUaDiscoveryServer
 		//- ApplicationIf -----------------------------------------------------
 
 	  private:
+		IOThread::SPtr ioThread_;
+		ConfigXmlManager configXmlManager_;
+		DiscoveryModelConfig discoveryModelConfig_;
+		Discovery discovery_;
 	};
 
 }

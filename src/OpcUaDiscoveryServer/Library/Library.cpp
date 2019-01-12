@@ -28,6 +28,8 @@ namespace OpcUaDiscoveryServer
 
 	Library::Library(void)
 	: ApplicationIf()
+	, configXmlManager_()
+	, discovery_()
 	{
 	}
 
@@ -38,7 +40,51 @@ namespace OpcUaDiscoveryServer
 	bool
 	Library::startup(void)
 	{
-		Log(Debug, "Library::startup");
+		//
+		// create own thread
+		//
+		ioThread_ = constructSPtr<IOThread>();
+		if (!ioThread_->startup()) return false;
+
+		//
+        // read discovery model configuration file
+		//
+		Config::SPtr config;
+        if (!configXmlManager_.registerConfiguration(applicationInfo()->configFileName(), config)) {
+            Log(Error, "read configuration file error")
+            	.parameter("ErrorMessage", configXmlManager_.errorMessage())
+                .parameter("ConfigFileName", applicationInfo()->configFileName());
+        	return false;
+        }
+        Log(Info, "read configuration file")
+            .parameter("ConfigFileName", applicationInfo()->configFileName());
+
+        // element DiscoveryModel
+		boost::optional<Config> discoveryModelCfg = config->getChild("DiscoveryModel");
+		if (!discoveryModelCfg) {
+			Log(Error, "element missing in config file")
+				.parameter("Element", "DiscoveryModel")
+				.parameter("ConfigFileName", applicationInfo()->configFileName());
+			return false;
+		}
+
+        // parse discovery model config
+        discoveryModelConfig_.configFileName(applicationInfo()->configFileName());
+        discoveryModelConfig_.elementPrefix("DiscoveryModel");
+        if (!discoveryModelConfig_.decode(*discoveryModelCfg)) {
+        	return false;
+        }
+
+        //
+        // startup discovery service
+        //
+		discovery_.applicationServiceIf(&service());
+		discovery_.ioThread(ioThread_);
+		discovery_.discoveryModelConfig(discoveryModelConfig_);
+		if (!discovery_.startup()) {
+			return false;
+		}
+
 		return true;
 	}
 
@@ -46,6 +92,22 @@ namespace OpcUaDiscoveryServer
 	Library::shutdown(void)
 	{
 		Log(Debug, "Library::shutdown");
+
+		//
+		// shutdown discovery service
+		//
+		if (!discovery_.shutdown()) {
+			return false;
+		}
+
+		//
+		// stop threads
+		//
+	    if (!ioThread_->shutdown()) {
+	        return false;
+	    }
+	    ioThread_.reset();
+
 		return true;
 	}
 
