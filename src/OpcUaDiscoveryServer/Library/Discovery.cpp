@@ -295,7 +295,7 @@ namespace OpcUaDiscoveryServer
     		// discoveryProfileUri - todo
 
     		if (serverEntry->registeredServer().discoveryUrls().size() > 0) {
-    			serverEntry->registeredServer().discoveryUrls() = ad->discoveryUrls();
+    			ad->discoveryUrls() = serverEntry->registeredServer().discoveryUrls();
     		}
 
     		adVec.push_back(ad);
