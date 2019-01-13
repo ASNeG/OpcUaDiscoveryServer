@@ -10,7 +10,7 @@
 
 	<DiscoveryEndpoints>	
 	
-	<!--
+	
 		<DiscoveryEndpoint>
 		    <ServerUri>urn:localhost:ASNeG.de:OpcUaHistory</ServerUri>
 		    <ProductUri>urn:ASNeG.de:OpcUaHistory</ProductUri>
@@ -20,7 +20,7 @@
 		    <DiscoveryUrl>opc.tcp://127.0.0.1:8895</DiscoveryUrl>
 		    <SemaphoreFilePath></SemaphoreFilePath>
 		</DiscoveryEndpoint>
-	-->
+	
 		
 	</DiscoveryEndpoints>
 	

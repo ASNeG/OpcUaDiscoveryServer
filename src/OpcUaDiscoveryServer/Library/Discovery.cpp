@@ -63,11 +63,13 @@ namespace OpcUaDiscoveryServer
     {
 		RegisterForwardGlobal registerForwardGlobal;
 		registerForwardGlobal.setRegisterServerCallback(boost::bind(&Discovery::registerServer, this, _1));
-		registerForwardGlobal.setFindServersCallback(boost::bind(&Discovery::registerServer, this, _1));
+		registerForwardGlobal.setFindServersCallback(boost::bind(&Discovery::findServer, this, _1));
 		if (!registerForwardGlobal.query(applicationServiceIf_)) {
 	  		Log(Error, "register forward response error");
 			return false;
 		}
+
+		registerServerConfig(discoveryModelConfig_->discoveryEndpointConfigVec());
 
 	  	// start timer to check server entries
 	  	slotTimerElement_ = constructSPtr<SlotTimerElement>();
@@ -171,10 +173,10 @@ namespace OpcUaDiscoveryServer
     	Log(Debug, "register server request")
     	    .parameter("ServerUri", applicationRegisterServerContext->server_.serverUri().value())
     	    .parameter("ProductUri", applicationRegisterServerContext->server_.productUri().value())
-    	    .parameter("ServerNames", applicationRegisterServerContext->server_.serverNames())
+    	    //.parameter("ServerNames", applicationRegisterServerContext->server_.serverNames())
     	    .parameter("ServerType", applicationRegisterServerContext->server_.serverType().toString())
     	    .parameter("GatewayServerUri", applicationRegisterServerContext->server_.gatewayServerUri())
-    	    .parameter("DiscoveryUrls", applicationRegisterServerContext->server_.discoveryUrls())
+    	    //.parameter("DiscoveryUrls", applicationRegisterServerContext->server_.discoveryUrls())
     	    .parameter("SemaphoreFilePath", applicationRegisterServerContext->server_.semaphoreFilePath())
     	    .parameter("IsOnline", applicationRegisterServerContext->server_.isOnline());
 
@@ -189,7 +191,7 @@ namespace OpcUaDiscoveryServer
 
     		serverEntryMap_.insert(
     			std::make_pair(
-    				applicationRegisterServerContext->server_.serverUri().value(),
+    				applicationRegisterServerContext->server_.serverUri().toStdString(),
     				serverEntry
     			)
     		);
